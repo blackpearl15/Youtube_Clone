@@ -7,14 +7,24 @@ demoThumbnailUrl,demoVideoUrl,demoVideoTitle, demoChannelUrl } from '../utils/co
 
 
 const VideoCard = ({video : {id : {videoId},snippet}}) => {
+  console.log(snippet);
+  let imgname = snippet?.thumbnails?.high?.url;
+  if(imgname[6]=='='){
+    let n = imgname.length;
+    imgname = imgname.slice(0,5) + ":" + imgname.slice(8,n);
+  }
+  console.log(imgname);
+
   return (
-    <Card sx={{width:{ md:'381px',xs:'100%' },
+    <Card sx={{width:{ md:'381px',xs:'100%' , sm:'358px'},
     boxShadow:'none',borderRadius:0 }}>
         <Link to={videoId ? `/video/${videoId}` : demoVideoUrl}>
             <CardMedia 
-                image={snippet?.thumbnails?.high?.url}
+                image={imgname}
                 alt={snippet?.title}
-                sx={{width:382 , height:213 }}
+                sx={{width:{
+                  xs:'100%' , sm:'358px' , md:'382px'
+                } , height:213 }}
             />
             <CardContent 
                 sx={{bgcolor:'#1e1e1e',height:'106px'}}>
